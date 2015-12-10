@@ -1,5 +1,4 @@
 from gensim.models.word2vec import *
-from nltk.corpus import brown
 from os.path import isfile
 
 def create_model(sentences = None, filepath=None, save=True, savename="model.txt"):
@@ -20,6 +19,12 @@ def create_model_from_NLTK():
     filepath = "nltkcorpus.txt"
     if isfile(filepath):
         return create_model(filepath= filepath, save=False)
+    else:
+        from nltk.corpus import reuters, brown, gutenberg
+        sents = reuters.sents() + brown.sents()
+        for gsents in [gutenberg.sents(fid) for fid in gutenberg.fileids()]:
+            sents += gsents
 
-    return create_model(sentences=brown.sents(), savename=filepath)
+        return create_model(sentences=sents, savename=filepath)
+
 
