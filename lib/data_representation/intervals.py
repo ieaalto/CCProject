@@ -2,6 +2,10 @@ from config import settings
 
 
 class Intervals:
+    '''
+    Represents the data vector as ascending and descending sequences. Information about the intervals can be accessed through the Intervals object.
+    '''
+
 
     def __init__(self, vector):
         self.vector = [round(k, settings.ROUNDING) for k in vector]
@@ -51,9 +55,15 @@ class Intervals:
     def get_intervals(self):
         return [iv.interval for iv in self.intervals]
 
+    def __repr__(self):
+        return str(self.intervals)
+
 
 
 class Interval:
+    '''
+    A data object class for use with Intervals.
+    '''
 
     def __init__(self, diff, interval, start, end, total_len):
         self.start, self.end = start, end
@@ -72,4 +82,7 @@ class Interval:
 
     def __getitem__(self, item):
         return self.interval[item]
+
+    def __repr__(self):
+        return str(self.interval)
 

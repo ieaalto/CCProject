@@ -3,12 +3,19 @@ from lib.musical.note import Note
 
 
 class Notes:
-
+    '''
+    Represents a sequence of notes. Allows the notes to be split according to time.
+    '''
     def __init__(self, notes):
         self.notes = notes
         self.duration = sum([n.beats for n in notes])
 
     def get_seqs(self, intervals):
+        '''
+        Splits the notes into sequences so that their lengths in beats correspond to the intervals of the given object.
+        :param intervals: an Intervals object
+        :return:
+        '''
         cut_points = [iv.relative_end()*self.duration for iv in intervals]
         seqs = []
         start, end, t, cp_i = 0, 0, 0, 0;
@@ -18,7 +25,7 @@ class Notes:
             t += self.notes[i].beats
             if t >= cut_points[cp_i]:
                 cp_i += 1
-                seqs.append( (start, end) )
+                seqs.append( (start, end, (end-start)/len(self.notes)) )
                 start = i+1
 
         return seqs

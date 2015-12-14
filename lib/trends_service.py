@@ -21,6 +21,9 @@ def _parse_data(data):
     return parsed_data
 
 def fetch_trend_vector(keyword, mock=False):
+    '''
+    Returns a list of numbers. Set mock=True to use mock data and avoid hitting the request limit of Google Trends.
+    '''
     fetch = _fetch_mock if mock else _fetch_data
     data = fetch(keyword)
 

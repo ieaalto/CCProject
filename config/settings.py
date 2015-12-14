@@ -5,21 +5,22 @@ MOCK = True
 
 ##Semantics
 MOODS = {
-            "negative": [],
-            "positive":[],
-            "active": [],
-            "inactive": []
 }
+
+##Genetic
+POPULATION = 500
+GENERATIONS = 30
 
 ##Features
 
 MOOD_FEATURES = {
-                 #"negative": [],
-                 #"positive": [],
-                 #"active": [],
-                 #"inactive": []
-                "test" : [mean_pitch, mean_velocity]
+                "test" : [note_time, mean_velocity, neg(pitch_variance)]
 }
 
+MAX_LENGTH = 400
 ##Data
 ROUNDING = 2 ##Round to n decimal places
+
+##Markov chains
+MARKOV_DATA = "notes.txt"
+ORDER = 2

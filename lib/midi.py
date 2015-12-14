@@ -11,8 +11,8 @@ def save_midi(filename, notes):
     notes_bytes = ""
 
     for note in notes:
-        note_on, note_off = note_on_and_off(note)
-        notes_bytes += variable_length_quantity(0)+note_on + variable_length_quantity(note.ticks()) + note_off
+        note_on, note_off = _note_on_and_off(note)
+        notes_bytes += _variable_length_quantity(0) + note_on + _variable_length_quantity(note.ticks()) + note_off
 
     bytes_hex += "4d54726b"+ hex(len(notes_bytes)//2)[2:].zfill(8)+ notes_bytes + "ff2f00" #Midi track chunk
 
@@ -21,7 +21,7 @@ def save_midi(filename, notes):
         f.write(bytearray.fromhex(bytes_hex))
         f.close()
 
-def variable_length_quantity(n):
+def _variable_length_quantity(n):
     b = bin(n)[2:]
     seven_bit_parts = [ b[max(i-7, 0):i] for i in range(len(b), 0,-7) ]
     binary = "0" + seven_bit_parts[0].zfill(7)
@@ -31,7 +31,7 @@ def variable_length_quantity(n):
     h = hex(int(binary, 2))[2:]
     return h.zfill(math.ceil(len(h)/2)*2)
 
-def note_on_and_off(note):
+def _note_on_and_off(note):
     key_and_vel = hex(note.pitch)[2:].zfill(2) + hex(note.velocity)[2:].zfill(2)
     note_on = "90" + key_and_vel
     note_off = "80" + key_and_vel
